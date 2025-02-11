@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Button from "./Button";
 import { TiLocationArrow } from "react-icons/ti";
+import { FiMenu, FiX } from "react-icons/fi";
 import { useWindowScroll } from "react-use";
 import gsap from "gsap";
 
@@ -15,8 +16,11 @@ const navLinks = [
 const Navbar = () => {
 	const [lastScrollY, setLastScrollY] = useState(0);
 	const [isNavVisible, setIsNavVisible] = useState(true);
-
+	const [mobileMenu, setMobileMenu] = useState(false);
 	const { y: currentScrollY } = useWindowScroll();
+
+	const mobileMenuRef = useRef(null);
+	const navContainerRef = useRef(null);
 
 	useEffect(() => {
 		if (currentScrollY === 0) {
@@ -42,7 +46,31 @@ const Navbar = () => {
 		});
 	}, [isNavVisible]);
 
-	const navContainerRef = useRef(null);
+	useEffect(() => {
+		if (mobileMenu) {
+			gsap.set(mobileMenuRef.current, {
+				display: "flex",
+				y: "-20",
+				opacity: 0,
+			});
+			gsap.to(mobileMenuRef.current, {
+				duration: 0.4,
+				y: 0,
+				opacity: 1,
+				ease: "power4.inOut",
+			});
+		} else {
+			gsap.to(mobileMenuRef.current, {
+				duration: 0.4,
+				y: "-20",
+				opacity: 0,
+				ease: "power4.inOut",
+				onComplete: () => {
+					gsap.set(mobileMenuRef.current, { display: "none" });
+				},
+			});
+		}
+	}, [mobileMenu]);
 	return (
 		<div
 			ref={navContainerRef}
@@ -58,7 +86,7 @@ const Navbar = () => {
 							id='production-button'
 							title='przycisk do czegoś'
 							rightIcon={<TiLocationArrow />}
-							containerClass='bg0blue-50 md:flex hidden items-center justify-center gap-2'
+							containerClass='bg-blue-50 md:flex hidden items-center justify-center gap-2'
 						/>
 					</div>
 					<div className='flex h-full items-center'>
@@ -69,9 +97,40 @@ const Navbar = () => {
 								</a>
 							))}
 						</div>
+						<div className='block md:hidden'>
+							{mobileMenu ? (
+								<FiX
+									className='size-full px-2 py-1 text-3xl text-white hover:scale-105'
+									onClick={() => setMobileMenu(!mobileMenu)}
+								/>
+							) : (
+								<FiMenu
+									className='size-full px-2 py-1 text-3xl text-white hover:scale-105'
+									onClick={() => setMobileMenu(!mobileMenu)}
+								/>
+							)}
+						</div>
 					</div>
 				</nav>
 			</header>
+
+			<div
+				ref={mobileMenuRef}
+				className='absolute right-0 top-full flex h-[180px] flex-col items-end bg-black/90  md:hidden'
+				style={{ display: "none" }}
+			>
+				<p className="border-2 p-4 uppercase text-white">dodac zamykanie po kliknieciu gdziekolwiek i po kliknenciu na podstrone</p>
+				{navLinks.map((link, index) => (
+					<a
+						key={index}
+						href={link.path}
+						className='nav-hover-btn block px-4 py-2 '
+						onClick={() => setMobileMenu(false)}
+					>
+						{link.label}
+					</a>
+				))}
+			</div>
 		</div>
 	);
 };
