@@ -21,6 +21,7 @@ const Navbar = () => {
 
 	const mobileMenuRef = useRef(null);
 	const navContainerRef = useRef(null);
+	const menuIconRef = useRef(null);
 
 	useEffect(() => {
 		if (currentScrollY === 0) {
@@ -71,6 +72,29 @@ const Navbar = () => {
 			});
 		}
 	}, [mobileMenu]);
+
+	useEffect(() => {
+		if (mobileMenu) {
+			gsap.to(menuIconRef.current, {
+				duration: 0.4,
+				rotate: 180,
+
+				onComplete: () => {
+					gsap.set(menuIconRef.current, { rotate: 0, opacity: 1 });
+				},
+			});
+		} else {
+			gsap.to(menuIconRef.current, {
+				rotate: -180,
+
+				duration: 0.4,
+				onComplete: () => {
+					gsap.set(menuIconRef.current, { rotate: 0, opacity: 1 });
+				},
+			});
+		}
+	}, [mobileMenu]);
+
 	return (
 		<div
 			ref={navContainerRef}
@@ -98,17 +122,19 @@ const Navbar = () => {
 							))}
 						</div>
 						<div className='block md:hidden'>
-							{mobileMenu ? (
-								<FiX
-									className='size-full px-2 py-1 text-3xl text-white hover:scale-105'
-									onClick={() => setMobileMenu(!mobileMenu)}
-								/>
-							) : (
-								<FiMenu
-									className='size-full px-2 py-1 text-3xl text-white hover:scale-105'
-									onClick={() => setMobileMenu(!mobileMenu)}
-								/>
-							)}
+							<div ref={menuIconRef}>
+								{mobileMenu ? (
+									<FiX
+										className='size-full px-2 py-1 text-3xl text-white hover:scale-105'
+										onClick={() => setMobileMenu(!mobileMenu)}
+									/>
+								) : (
+									<FiMenu
+										className='size-full px-2 py-1 text-3xl text-white hover:scale-105'
+										onClick={() => setMobileMenu(!mobileMenu)}
+									/>
+								)}
+							</div>
 						</div>
 					</div>
 				</nav>
@@ -119,7 +145,10 @@ const Navbar = () => {
 				className='absolute right-0 top-full flex h-[180px] flex-col items-end bg-black/90  md:hidden'
 				style={{ display: "none" }}
 			>
-				<p className="border-2 p-4 uppercase text-white">dodac zamykanie po kliknieciu gdziekolwiek i po kliknenciu na podstrone</p>
+				<p className='border-2 p-4 uppercase text-white'>
+					dodac zamykanie po kliknieciu gdziekolwiek i po kliknenciu na
+					podstrone
+				</p>
 				{navLinks.map((link, index) => (
 					<a
 						key={index}

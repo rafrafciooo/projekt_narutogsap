@@ -20,7 +20,7 @@ const AnimatedTitle = ({ title, containerClass }) => {
 				transform: "translate3d(0,0,0) rotateY(0deg) rotateX(0deg)",
 				duration: 0.5,
 				ease: "power2.out",
-				stagger: 0.1,
+				stagger: 0.2,
 			});
 		}, containerRef);
 		return () => ctx.revert();
