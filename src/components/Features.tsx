@@ -4,7 +4,7 @@ import { TiLocationArrow } from "react-icons/ti";
 
 const BentoTilt = ({ children, className = "" }) => {
 	const [transformStyle, setTransformStyle] = useState("");
-	const itemRef = useRef(null);
+	const itemRef = useRef<HTMLDivElement>(null);
 	const handleMouseMove = e => {
 		if (!itemRef.current) return;
 
@@ -22,17 +22,19 @@ const BentoTilt = ({ children, className = "" }) => {
 	};
 
 	return (
-		<div
-			className={className}
-			ref={itemRef}
-			onMouseMove={handleMouseMove}
-			onMouseLeave={handleMouseLeave}
-			style={{
-				transform: transformStyle,
-			}}
-		>
-			{children}
-		</div>
+		<>
+			<div
+				className={className}
+				ref={itemRef}
+				onMouseMove={handleMouseMove}
+				onMouseLeave={handleMouseLeave}
+				style={{
+					transform: transformStyle,
+				}}
+			>
+				{children}
+			</div>
+		</>
 	);
 };
 

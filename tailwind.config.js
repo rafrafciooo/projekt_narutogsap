@@ -13,17 +13,17 @@ export default {
 			colors: {
 				blue: {
 					50: "#E3F2FD", // Jasny błękit, pastelowy
-					75: "#BBDEFB", // Trochę głębszy, ale nadal delikatny
-					100: "#90CAF9", // Typowy anime błękit
-					200: "#64B5F6", // Żywy, ale nie za ciemny
-					300: "#42A5F5", // Intensywny, kontrastowy niebieski
+					75: "#BBDEFB", // Chłodny niebieski
+					100: "#90CAF9", // Klasyczny błękit w stylu anime
+					200: "#64B5F6", // Niebieski o intensywniejszym tonie
+					300: "#42A5F5", // Bardzo intensywny niebieski
 				},
 				violet: {
-					300: "#B388FF", // Jasny, anime-fioletowy
+					300: "#B388FF", // Jasny fiolet
 				},
 				yellow: {
-					100: "#FFECB3", // Ciepły pastelowy żółty
-					300: "#FFD54F", // Kontrastowy, bardziej intensywny
+					100: "#FFECB3", // Pastelowy żółty
+					300: "#FFD54F", // Intensywny żółty
 				},
 			},
 		},
